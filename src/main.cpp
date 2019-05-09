@@ -4,12 +4,12 @@
 #include <cmath>
 #include <math.h>
 
-class Classtest{
+class ClassTest{
     private:
         std::string name;
 
     public:
-        Classtest(std::string s){
+        ClassTest(std::string s){
             name = s;
         }
 
@@ -20,12 +20,28 @@ class Classtest{
 
 };
 
+class MyUtils{
+    private:
+        int para;
+
+    public:
+        double rad2deg(double radian){
+            return radian*180.0/M_PI;
+        }
+
+        double deg2rad(double degree){
+            return degree*M_PI/180.0;
+        }
+};
+
 class DebrisOrbit{
     private:
         int para1 = 0;
 
-        double g = 9.8*0.001; //[km/s]
-        double mu = 3.986004418*pow(10.0, 5.0); //[km^3/s^2];
+        const double r_e = 6378.0; //地球平均半径
+        const double g = 9.8*0.001; //[km/s]
+        const double mu = 3.986004418*pow(10.0, 5.0); //[km^3/s^2];
+        // double mu = 398600; //[km^3/s^2];
 
         double sma = 6829.677; //[km]
         double ecc = 0.001393; //[-]
@@ -34,6 +50,7 @@ class DebrisOrbit{
         double arg_perigee = 35.169; //[deg]
 
         double Vc = 10.0; //[km/s]
+        double V_hat; //non-Dementionnal verosity
         double gamma_c = 0.0;
 
         double r[2]; //軌道半径(r_D, r_E)
@@ -42,24 +59,34 @@ class DebrisOrbit{
         double dV[2]; //ΔV
         double beta; //水平方向に対するΔVの方向
 
+        MyUtils myUtils;
+        double deg2rad(double x){return myUtils.deg2rad(x);}
+        double rad2deg(double x){return myUtils.rad2deg(x);}
+
     public:
         DebrisOrbit(double dv = 4.0, 
                     double beta_d = (M_PI/6.0), 
+                    double start_height = 200,
                     double h_interface = 120.0){
             dV[0] = dv;
             beta = beta_d;
             
-            r[0] = 6371.0 + 206.18;
-            r[1] = 6371.0 + h_interface; //[km] 地球半径＋interface高度
+            r[0] = r_e + 206.18;
+            r[1] = r_e + h_interface; //[km] 地球半径＋interface高度
 
             std::cout<<"dv "<<dv<<std::endl;
             std::cout<<"beta_d "<<beta_d*180/M_PI<<std::endl;
             std::cout<<"interface height "<<h_interface<<"\n"<<std::endl;
+            
+        }
+
+        void initial_calc(){
+            Vc = sqrt(g*pow(r_e,2.0)/r[0]);
+            return;
         }
 
         double calc_interface_conditions(){
             
-            Vc = sqrt(g*r[0]);
             V[0] = sqrt( pow(Vc,2.0) + pow(dV[0],2.0) - 2.0*Vc*dV[0]*cos(beta) );
             gamma[0] = acos( (( Vc - dV[0]*cos(beta) ) / V[0] ) );
             
@@ -70,8 +97,11 @@ class DebrisOrbit{
             std::cout<< "V_D = " << V[0] <<std::endl;
             std::cout<< "Gamma_D = " << (gamma[0]*180.0/M_PI) <<std::endl;
             std::cout<< "V_E = " << V[1] <<std::endl;
-            // std::cout<< "Gamma_E = " <<  (gamma[1]*180.0/M_PI) <<std::endl;
-            std::cout<< "Gamma_E = " <<  gamma[1] <<std::endl;
+            std::cout<< "Gamma_E = " << rad2deg(gamma[1]) <<std::endl;
+            std::cout<< "V_hat = " << V[1]/Vc <<std::endl;
+            // std::cout<< "Gamma_E = " <<  gamma[1] << "\n" <<std::endl;
+
+            // std::cout<<"V_E = "<< (r[0]*V[0]*cos(2.10305*M_PI/180.0)/(r[1]*cos(-1.6*M_PI/180.0))) <<std::endl;
 
             return 0.0;
         }
@@ -89,11 +119,11 @@ class DebrisOrbit{
 int main(){
     // std::cout<<"hello world!!"<<std::endl;
 
-    Classtest classtest("world !!");
+    ClassTest classtest("world !!");
     classtest.output();
 
     double beta = (34.0*M_PI/180.0);
-    DebrisOrbit debrisOrbit(0.5, beta, 122.0);
+    DebrisOrbit debrisOrbit(0.15, beta, 206.18, 122.0);
     debrisOrbit.calc_interface_conditions();
 
     return 0;
