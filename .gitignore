@@ -1,4 +1,6 @@
 .vscode/
+src/a\.exe
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -59,4 +61,3 @@ docs/_build/
 # PyBuilder
 target/
 
-src/a\.exe
