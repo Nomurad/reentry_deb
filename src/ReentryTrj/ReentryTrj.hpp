@@ -35,8 +35,9 @@ class DebrisOrbit{
         double beta; //水平方向に対するΔVの方向
 
         MyUtils myUtils;
-        double deg2rad(double x){return myUtils.math.deg2rad(x);}
-        double rad2deg(double x){return myUtils.math.rad2deg(x);}
+        MyUtils::Math math;
+        double deg2rad(double x){return math.deg2rad(x);}
+        double rad2deg(double x){return math.rad2deg(x);}
 
     public:
         DebrisOrbit(double dv = 4.0, 

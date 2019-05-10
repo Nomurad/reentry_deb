@@ -30,7 +30,8 @@ int main(){
     ClassTest classtest("world !!");
     classtest.output();
 
-    double beta = (34.0*M_PI/180.0);
+    MyUtils::Math math_s;
+    double beta = math_s.deg2rad(34.0);
     DebrisOrbit debrisOrbit(0.15, beta, 206.18, 122.0);
     debrisOrbit.calc_interface_conditions();
 

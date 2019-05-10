@@ -11,14 +11,14 @@ class MyUtils{
     private:
         int para;
 
+
+    public:
         class Math{
             public:
                 double rad2deg(double radian);
                 double deg2rad(double degree);
         };
-
-    public:
-        Math math;
+        // Math math;
 
 };
 
