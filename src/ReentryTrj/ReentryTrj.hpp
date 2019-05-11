@@ -1,10 +1,11 @@
 #ifndef REENTRYTRJ_HPP
 #define REENTRYTRJ_HPP
 
-#include <iostream>
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
 #endif
+
+#include <iostream>
 #include <math.h>
 
 #include "../MyUtils/MyUtils.hpp"
@@ -40,23 +41,10 @@ class DebrisOrbit{
         double rad2deg(double x){return math.rad2deg(x);}
 
     public:
-        DebrisOrbit(double dv = 4.0, 
-                    double beta_d = (M_PI/6.0), 
-                    double start_height = 200,
-                    double h_interface = 120.0){
-                        dV[0] = dv;
-                        beta = beta_d;
-                        
-                        r[0] = r_e + 206.18;
-                        // r[0] = 206.18;
-                        r[1] = r_e + h_interface; //[km] 地球半径＋interface高度
-
-                        std::cout<<"dv "<<dv<<std::endl;
-                        std::cout<<"beta_d "<<beta_d*180/M_PI<<std::endl;
-                        std::cout<<"interface height "<<h_interface<<"\n"<<std::endl;
-                        
-                        initial_calc();
-                    }
+        DebrisOrbit(double dv, 
+                    double beta_d, 
+                    double start_heigh,
+                    double h_interface);
 
         void initial_calc();
 

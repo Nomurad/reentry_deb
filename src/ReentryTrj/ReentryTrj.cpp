@@ -1,22 +1,22 @@
 #include "ReentryTrj.hpp"
 
-// DebrisOrbit::DebrisOrbit(double dv = 4.0, 
-//                     double beta_d = (M_PI/6.0), 
-//                     double start_height = 200,
-//                     double h_interface = 120.0){
-//         dV[0] = dv;
-//         beta = beta_d;
+DebrisOrbit::DebrisOrbit(double dv = 4.0, 
+                    double beta_d = (M_PI/6.0), 
+                    double start_height = 200,
+                    double h_interface = 120.0){
+        dV[0] = dv;
+        beta = beta_d;
         
-//         r[0] = r_e + 206.18;
-//         // r[0] = 206.18;
-//         r[1] = r_e + h_interface; //[km] 地球半径＋interface高度
+        r[0] = r_e + 206.18;
+        // r[0] = 206.18;
+        r[1] = r_e + h_interface; //[km] 地球半径＋interface高度
 
-//         std::cout<<"dv "<<dv<<std::endl;
-//         std::cout<<"beta_d "<<beta_d*180/M_PI<<std::endl;
-//         std::cout<<"interface height "<<h_interface<<"\n"<<std::endl;
+        std::cout<<"dv "<<dv<<std::endl;
+        std::cout<<"beta_d "<<beta_d*180/M_PI<<std::endl;
+        std::cout<<"interface height "<<h_interface<<"\n"<<std::endl;
         
-//         initial_calc();
-// }
+        initial_calc();
+}
 
 
 void DebrisOrbit::initial_calc(){

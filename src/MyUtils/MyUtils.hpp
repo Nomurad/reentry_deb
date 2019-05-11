@@ -1,5 +1,5 @@
-#ifndef C_HPP
-#define C_HPP
+#ifndef MYUTILS_HPP
+#define MYUTILS_HPP
 
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
@@ -22,4 +22,4 @@ class MyUtils{
 
 };
 
-#endif //C_HPP
+#endif //MYUTILS_HPP
