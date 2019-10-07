@@ -32,8 +32,8 @@ int main(){
 
     MyUtils::Math math_s;
     double beta = math_s.deg2rad(34.0);
-    DebrisOrbit debrisOrbit(0.15, beta, 206.18, 122.0);
-    debrisOrbit.calc_interface_conditions();
+    DebrisOrbit debrisOrbit;
+    debrisOrbit.calc_interface_conditions(0.15, beta, 206.18, 122.0);
 
     return 0;
 }

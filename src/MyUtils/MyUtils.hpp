@@ -6,6 +6,8 @@
 #endif
 
 #include <math.h>
+#include <cmath>
+#include <limits>
 
 class MyUtils{
     private:
