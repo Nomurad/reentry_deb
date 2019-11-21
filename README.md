@@ -1,3 +1,3 @@
 # reentry_deb
 
-Calculator space debris re-entry trajectries.
+Calculator of space debris re-entry trajectries.
