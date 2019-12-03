@@ -12,8 +12,6 @@
 
 class DebrisOrbit{
     private:
-        int para1 = 0;
-
         const double r_e = 6378.0; //地球平均半径
         const double g = 9.8*0.001; //重力加速度[km/s]
         const double mu = 3.986004418*pow(10.0, 5.0); //重力定数(地球)[km^3/s^2];
@@ -39,6 +37,7 @@ class DebrisOrbit{
         double A = 10.0;     //基準面積 A[m^2]
         double C_D = 1.0;    //抵抗係数 C_D[-]
         double C_B = m/(C_D*A);    //弾道係数 C_B[kg/m^2] ((m/C_D*A)
+        
 
         // from "Dynamics of Atmospheric Re-Entry",p38
         const double rho_atmosphere = 1.752;    //[kg/m^3]
