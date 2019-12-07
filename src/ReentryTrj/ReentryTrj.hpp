@@ -12,10 +12,6 @@
 
 class DebrisOrbit{
     private:
-        const double r_e = 6378.0; //地球平均半径
-        const double g = 9.8*0.001; //重力加速度[km/s]
-        const double mu = 3.986004418*pow(10.0, 5.0); //重力定数(地球)[km^3/s^2];
-        // double mu = 398600; //[km^3/s^2];
 
         double sma = 6829.677; //軌道長半径[km]
         double ecc = 0.001393; //離心率[-]
@@ -27,21 +23,18 @@ class DebrisOrbit{
         double V_hat; //non-Dementionnal verosity
         double gamma_c = 0.0;
 
-        double r[2]; //軌道半径(r_D, r_E)
-        double V[2]; //verosity
-        double gamma[2]; //飛行経路角
+        // double r ,r_D, r_E; //軌道半径(r_D, r_E)
+        // double V, V_D, V_E; //verosity
+        // double gamma, gamma_D, gamma_E; //飛行経路角
         double dV[2]; //ΔV
         double beta; //水平方向に対するΔVの方向
 
-        double m = 100.0;    //質量 m[kg]
+        double m = 2000.0;    //質量 m[kg]
         double A = 10.0;     //基準面積 A[m^2]
         double C_D = 1.0;    //抵抗係数 C_D[-]
-        double C_B = m/(C_D*A);    //弾道係数 C_B[kg/m^2] ((m/C_D*A)
+        double C_B = m/(C_D*A)*1e-6;    //弾道係数 C_B[kg/m^2] ((m/C_D*A)
         
-
-        // from "Dynamics of Atmospheric Re-Entry",p38
-        const double rho_atmosphere = 1.752;    //[kg/m^3]
-        const double ScaleHight = 6.7;    //[km]
+        double Integrand(double r);
 
         MyUtils myUtils;
         MyUtils::Math math;
@@ -49,8 +42,18 @@ class DebrisOrbit{
         double rad2deg(double x){return math.rad2deg(x);}
 
     public:
-        double rho_atomosphere;
-        double ScaleHeight;
+        const double r_e = 6378.0; //地球平均半径
+        const double g = 9.8*0.001; //重力加速度[km/s]
+        const double mu = 3.986004418*pow(10.0, 5.0); //重力定数(地球)[km^3/s^2];
+        // double mu = 398600; //[km^3/s^2];
+        // from "Dynamics of Atmospheric Re-Entry",p38
+        const double rho_atmosphere = 1.752;    //[kg/m^3]
+        const double ScaleHeight = 6.7;    //[km]
+
+        double r, r_E, r_D;
+        double V, V_D, V_E; //verosity
+        double gamma, gamma_D, gamma_E; //飛行経路角
+        double rho, rho_E;
 
         DebrisOrbit();
 
@@ -61,6 +64,9 @@ class DebrisOrbit{
                                         double start_heigh,
                                         double h_interface);
 
+        double calc_flight_path_angle(double r);
+        double calc_velocity(double r, double gamma);
+        double calc_reentry_span(double r);
         double calc_1dim_order_solution();
 
         // SpacePlane's Dynamics (coordinate system:ECI)
@@ -72,6 +78,26 @@ class DebrisOrbit{
         double kai_dot();
 
         double atmos_density(double height);
+
+        void set_ballistic(double C_B){
+            this->C_B = C_B;
+            return;
+        };
+        double get_ballistic(){
+            return this->C_B;
+        }
+        void set_weight(double weight){
+            this->m = weight;
+            return;
+        };
+        void set_RefArea(double area){
+            this->A = area;
+            return;
+        };
+        void set_Drag_coeff(double Cd){
+            this->C_D = Cd;
+            return;
+        };
 
 };
 
